@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario_T05</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <form id="miFormulario" action="/guardar" method="post">
+            <h2>Formulario</h2>
+            <br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" title="Ingrese solo letras" placeholder="Ingrese su Nombre"
+                required>
+            <br>
+            <br>
+
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" title="Ingrese bien su correo electrónico"
+                placeholder="Ingrese su correo" required>
+            <br>
+            <br>
+
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" title="Ingrese su contraseña"
+                placeholder="Ingrese su contraseña" required>
+            <br>
+            <br>
+
+
+            <button id="btn_guardar" type="submit">Enviar</button>
+        </form>
+    </div>
+
+
+    <h1>Tabla de muestra de datos</h1>
+    <table border="1" id="datosTabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Contraseña</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de datos se insertarán aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/obtener-datos')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.querySelector('#datosTabla tbody');
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                                <td>${item.nombre}</td>
+                                <td>${item.email}</td>
+                                <td>${item.password}</td>
+                            `;
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error al obtener datos: ', error));
+        });
+    </script>
+
+
+    <script src="/js/validacion.js"></script>
+
+</body>
+
+</html>
